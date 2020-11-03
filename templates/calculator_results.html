@@ -4,7 +4,16 @@
         <title>Calculator Results</title>
     </head>
     <body>
-        <!-- Your HTML code goes here! -->
+        <p>You chose to {{ operation }} {{ operand1 }} and {{ operand2 }}. Your result is: 
+            {% if operation == "add" %}
+            {{ operand1 + operand2 }}
+            {% elif operation == "subtract" %}
+            {{ operand1 - operand2 }}
+            {% elif operation == "multiply" %}
+            {{ operand1 * operand2 }}
+            {% elif operation == "divide" %}
+            {{ operand1 / operand2 }}
+            {% endif %} </p>
 
 
 

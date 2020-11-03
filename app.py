@@ -18,22 +18,16 @@ def homepage():
 @app.route('/froyo')
 def choose_froyo():
     """Shows a form to collect the user's Fro-Yo order."""
-    return """
-    <form action="/froyo_results" method="GET">
-        What is your favorite Fro-Yo flavor? <br/>
-        <input type="text" name="flavor"><br/>
-        What toppings do you want? <br/>
-        <input type="text" name="toppings"><br/>
-        <input type="submit" value="Submit!">
-        </form>
-        """
+    return render_template('froyo_form.html')
 
 @app.route('/froyo_results')
 def show_froyo_results():
     """Shows the user what they ordered from the previous page."""
-    users_froyo_flavor = request.args.get('flavor')
-    users_froyo_toppings = request.args.get('toppings')
-    return f'You ordered {users_froyo_flavor} flavored Fro-Yo with {users_froyo_toppings} as toppings!'
+    context = {
+        'flavor' : request.args.get('flavor'),
+        'toppings' : request.args.get('toppings')
+    }
+    return render_template('froyo_results.html', **context)
 
 @app.route('/favorites')
 def favorites():
@@ -77,6 +71,7 @@ def message_results():
     user_secret_list = sorted(user_input_message)
     #made my own method since I didn't see the starter code at the top, leaving it since i'm proud of my work :D
     def list_to_string(user_list):
+        """Converts a list of characters into a string"""
         new_string = ""
         for letter in user_list:
             new_string += letter
@@ -90,37 +85,27 @@ def message_results():
 @app.route('/calculator')
 def calculator():
     """Shows the user a form to enter 2 numbers and an operation."""
-    return """
-    <form action="/calculator_results" method="GET">
-        Please enter 2 numbers and select an operator.<br/><br/>
-        <input type="number" name="operand1">
-        <select name="operation">
-            <option value="add">+</option>
-            <option value="subtract">-</option>
-            <option value="multiply">*</option>
-            <option value="divide">/</option>
-        </select>
-        <input type="number" name="operand2">
-        <input type="submit" value="Submit!">
-    </form>
-    """
+    return render_template('calculator_form.html')
 
 @app.route('/calculator_results')
 def calculator_results():
     """Shows the user the result of their calculation."""
-    operand1 = int(request.args.get('operand1'))
-    operand2 = int(request.args.get('operand2'))
-    operation = request.args.get('operation')
-    result = ""
-    if operation == 'add':
-        result = int(operand1 + operand2)
-    elif operation == 'subtract':
-        result = int(operand1 - operand2)
-    elif operation == 'multiply':
-        result = int(operand1 * operand2)
-    elif operation == 'divide':
-        result = float(operand1 / operand2)
-    return f'You chose to {operation} {operand1} and {operand2}. Your result is: {result}'
+    #Below is the remnants of the pre-refactor of the calculator form/results
+    # result = ""
+    # if operation == 'add':
+    #     result = int(operand1 + operand2)
+    # elif operation == 'subtract':
+    #     result = int(operand1 - operand2)
+    # elif operation == 'multiply':
+    #     result = int(operand1 * operand2)
+    # elif operation == 'divide':
+    #     result = float(operand1 / operand2)
+    context = {
+        'operand1' : int(request.args.get('operand1')),
+        'operand2' : int(request.args.get('operand2')),
+        'operation' : request.args.get('operation'),
+    }
+    return render_template('calculator_results.html', **context)
 
 
 # List of compliments to be used in the `compliments_results` route (feel free 
