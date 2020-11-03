@@ -4,8 +4,16 @@
         <title>Compliments Results</title>
     </head>
     <body>
-        <!-- Your HTML code goes here! -->
+       <h1> Hello {{ users_name }}! </h1>
 
+        {% if wants_compliments == "yes" %}
+        <h2> You are absolutely: </h2>
+        <ul>
+        {% for compliment in compliment_list %}
+        <li>{{ compliment }} </li>
+        {% endfor %}
+        </ul>
+        {% endif %}
         
 
         
